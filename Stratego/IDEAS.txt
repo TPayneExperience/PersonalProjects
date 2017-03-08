@@ -1,0 +1,567 @@
+
+GOAL: CAPTURE FLAG OF OPPonent while defending your own flag
+
+RULES: 
+	1 move per turn, horizontaly or vert
+	Cannot jump over another piece
+	Only Scout can move multiple spaces/turn
+	if pieces meet, values revealed, lower value removed, 
+	if same value, both removed
+	When Spy attachs Marshall, spy wins, BUT if marshall attacks spy, marshall wins
+	Bombs lost when defeated by a miner
+	Bombs/flags cannot be moved
+	Bomb kills everything but Miner
+	Within board are obsticles of 2x2, where players cannot move 
+	boards are 10x10
+
+
+PIECES:
+	6 B Bomb
+	1 F Flag
+	1 1 Spy
+	8 2 Scout
+	5 3 Miner
+	4 4 ...
+	4 5 ...
+	4 6 ...
+	3 7 ...
+	2 8 ...
+	1 9 ...
+	1 10 Marshall
+
+1 - spy
+2 - scout
+3 - miner
+4 - sergent
+5 - lieutenant
+6 - captin
+7 - major
+8 - colonel
+9 - general
+10 - marshal
+11 - bomb
+12 - flag
+13 - ob
+
+UI:
+	2x Drag/drop tree list of pieces, left and right sides of the board
+	Button at bottom that says pass to next player
+
+
+
+========== PROGRAMMING ==========================
+
+namespace ECS
+
+Entity Manager:
+	Entities = {}
+
+	addEntity(*Entity) //sets id val within
+	getEntity(int id)
+	removeEntity(*Entity)
+
+Entity:
+	int id
+	Components {}
+
+	addComponent()
+	removeComponent()
+	printInfo()
+
+
+Components:
+	string nameOfComponent
+	int, string, etc property (position, x, y)
+
+
+Systems...:
+	entityIDs [] //note ordering
+
+	addEntity()
+	removeEntity()
+	execute()
+
+
+------------------------
+COMPONENTS
+	// UTILITY 
+	int position [x,y]
+	string description
+
+	// PIECE ENTITY
+	UTIL.pos
+	int value [1 to 12, 00] = spy... flag, bomb, obstacle
+	bool alive
+	bool moveable
+	bool revealed
+	int player
+
+	// ACTION ENTITY
+	player/val winneras
+	-- description (utility)
+	player/val loser
+
+	// BOARD
+	list<button> buttons
+	pieceEntity graveyard1 []  	- list 
+	pieceEntity graveyard2 []
+	actionEntity historyBar[]			- list only 5 items long
+	GameState (currentplayer, str state)
+
+
+		ABS COMPONENT
+			string name
+			string key
+			CompMan.add(entity)
+
+		ABS COMP MANAGER
+			entity[] - list
+
+			add()
+			get()
+			remove(entity)
+			
+-----------------------------
+
+abs GameState
+	enter()
+	execute()
+	exit() //handles parent being set to next state
+-----
+GameStart
+GameSetup
+Gameplay
+GameOver
+
+----------------------------
+SYSTEMS
+	display
+		board
+			++ UpdateBoardImages
+			++ ClearBoard
+			++ SetImage
+			++ SetButtonLock
+			++ SetAllButtonLocks
+			+ posToTag
+			+ TagToPos
+			++ SetButtonBorder
+			++ SetLockListBox
+			++ TitleGroupboxes
+		graveyard
+			++ updateGraveyards
+			++ createItem
+			++ valueToPieceName
+		history
+			++ updateHistory
+			++ createItem
+	
+	gameSetup
+		board
+			++ lockInvalidPlacements
+			++ CreateBoardPiece			
+				- ButtonClicked, only if single piece selected
+			++ SwapPositions
+		graveyard
+			++ populateGraveyard
+
+	gameplay
+		+ getPiecesAtButton
+		+ update [functionality]
+			if starting position not set, then set
+			else
+				move
+				collisionCheck
+				isGameOver
+				removeDeadPieces
+				switchPlayer
+			updateBoard
+			updateGraveyard
+			updateHistory
+		+ pause
+			- setAllHidden, enableButton
+		+ unpause
+			- setAllHidden, disableButton
+		board
+			+ movePiece
+				- [start, cancel, end]
+				- returns bool if moved
+			LockInvalidMoves
+			setAllHidden
+			resetStartingButtonPosition
+			getPieceAtButton
+			getMoveOptions
+			collisionCheck
+			switchPlayer
+			removePiece
+			isGameOver
+		history
+			+ createAction
+		graveyard
+			cleanPieceEntity
+			moveToGraveyard
+			+ titleGraveyard
+
+
+
+
+GameMaster:
+	Board
+
+	update()
+	displayBoard()
+	isGameOver()
+
+
+
+
+===================================================
+example game:
+	player1 sets board
+	player2 sets board
+	player1 moves
+	player2 moves
+	player1 scout suicides into 3
+
+
+
+
+example:
+	graveyards populated
+	graveyard2 locked
+	player1 select piece
+	'' place piece
+	board updated with piece
+	repeat
+	all pieces placed
+	board hides
+	graveyard2 unlocked
+	button at bottom states next players turn to place
+	p2 repeat all above
+
+
+
+
+
+
+FUN DEVIATIONS:
+	- obstacles in different places
+	- move two/three pieces/turn
+	- moveable flags and bombs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Add(new Component.Utility.Position(Id));
+            Add(new Component.Utility.Player(Id));
+
+            Add(new Component.Piece.Value(Id));
+            Add(new Component.Piece.Alive(Id));
+            Add(new Component.Piece.Moveable(Id));
+            Add(new Component.Piece.Revealed(Id));
+
+
+python is just way better because it doens't require constant casting of one type to another. C# is constantly recompiling and finding those compiler errors.
+
+
+not sure if I even need to return that piece. maybe need to do something later with it? dunno.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How am I going to access the component manager from within each of the items. do I need to?
+
+could be don 
+
+
+so there is a get and set for stuff built into C#, not sure how though. looks like you do not create actual function for it or include () after identifier...
+
+
+PICK UP AT ABS ENTITY:
+	currently trying to figure out how to setup access to the dictionary items.
+
+	guess I'll just leave the dictionary to be accessible.
+
+
+current problems:
+	- deleting component doesnt have the id stored within it, so I cannot easily delete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wrap panel is the closes thing I've seen yet to what I'm looking for. 
+
+It doesn't auto scale the space between items.
+
+
+
+
+
+
+
+
+
+
+
+
+hmm. in rereading the wikipedia, it sounds different.
+
+Systems iterate through all entities with certain components, thus implying there is some way they are tracked.
+
+So maybe there is way to add subscriber ship at the moment a new component is added. 
+
+The only way I can think to do this is at the moment of creation for a part
+
+myEntity.addCompoent( new positionComponent(myEntity))
+	-> positionComponent(Entity e){...}
+
+no, that doesn't seem right. because that requires keeping track of each system list when components are added and removed.
+
+meanwhile if we just had a simple iteration through all entities checking for the desired components, we do stuff then.
+
+ok, so there is technically two ways. one just iterates through all the entities looking for stuff.
+
+another 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EXAMPLE:
+	entities have a function called all component
+	should they halso have addSystem?
+
+
+
+
+
+
+
+So I think that the problem I am having right now is that the info is not properly being stored like a table should be stored.
+
+I think they way this guy set up a dictionary is decent but then there is no way to retrieve the info easily other than through that entity itself.
+
+I feel like I'm on the verge of figuring it out.
+
+dictionaries is not the way.
+
+lists are not either.
+
+maybe array of arrays?
+
+but how is the data bound to the object?
+
+Array doesn't quite seem right as it only takes one type of thing.
+
+List? Should it be able to take on multiples of the same component? No. doesn't make any sense.
+	Can't have two healths, only one
+
+I feel like the components should instead be pointers to the table with all the data.
+
+Everything documentation wise says otherwise though.
+
+Yeah, I guess that's the best way. Systems are the tricky part though
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+============== RESEARCH =================
+
+Entity: 
+	int _ID
+
+Component:
+	raw data for one aspect of the object
+	typically structs, classes, arrays
+
+System:
+	runs Continuously as though each has a thread
+	globals actions at every entity that possesess a component of the system
+
+
+EX)
+	Bird:
+		appearance
+		position
+		Draw()
+			- Required components: pos, appearance
+
+use observer pattern:
+	class Observable:
+	    def __init__(self):
+	        self.__observers = []
+	    
+	    def register_observer(self, observer):
+	        self.__observers.append(observer)
+	    
+	    def notify_observers(self, *args, **kwargs):
+	        for observer in self.__observers:
+	            observer.notify(self, *args, **kwargs)
+
+	class Observer:
+	    def __init__(self, observable):
+	        observable.register_observer(self)
+	    
+	    def notify(self, observable, *args, **kwargs):
+	        print('Got', args, kwargs, 'From', observable)
+
+
+	subject = Observable()
+	observer = Observer(subject)
+	subject.notify_observers('test')
+
+
+
+
+
+logging not really an option unfortunately, as C# doesn't seem to have anything built in for it's functionality. Python does...
+
+but whatever.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,213 @@
+﻿<Window x:Class="Stratego.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Stratego"
+        mc:Ignorable="d"
+        Title="Stratego - by TPayne" Height="706.794" Width="900.788">
+    <Window.Resources>
+        <Style x:Key = "PieceButtonStyle" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="images\01_Spy_Blue.png" Stretch="Uniform"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <!--<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="3">
+                                    <!--<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Opacity" Value="1.0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="42*"/>
+            <RowDefinition Height="116*"/>
+            <RowDefinition Height="11*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="36*"/>
+            <ColumnDefinition Width="36*"/>
+            <ColumnDefinition Width="179*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="historyGroupBox" Header="History" Grid.ColumnSpan="2" Margin="10,10,10,0">
+            <ListBox x:Name="historyListBox"/>
+        </GroupBox>
+        <GroupBox x:Name="graveyardGroupBox" Header="Graveyard" Margin="10,10,10,2" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="graveyard1ListBox" Margin="0,0,10,0"/>
+                <ListBox x:Name="graveyard2ListBox" Grid.Column="1" Margin="10,0,0,0"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="boardGroupBox" Grid.Column="2" Header="Board" Margin="10,10,10,4" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                </Grid.RowDefinitions>
+                <WrapPanel x:Name="row_01" ItemWidth="62" HorizontalAlignment="Left" Width="621" Margin="0" Height="54" VerticalAlignment="Top">
+                    <Button x:Name="btn_01" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="01" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_02" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="02" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_03" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="03" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_04" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="04" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_05" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="05" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_06" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="06" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_07" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="07" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_08" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="08" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_09" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="09" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="10" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_02" ItemWidth="62" Grid.Row="1" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3">
+                    <Button x:Name="btn_11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="11" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="12" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_13" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="13" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_14" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="14" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_15" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="15" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_16" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="16" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_17" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="17" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_18" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="18" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_19" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="19" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_20" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="20" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_03" ItemWidth="62" Grid.Row="2" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3">
+                    <Button x:Name="btn_21" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="21" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_22" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="22" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_23" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="23" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_24" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="24" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_25" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="25" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_26" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="26" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_27" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="27" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_28" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="28" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="29" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="30" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_04" ItemWidth="62" Grid.Row="3" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,2,0,3">
+                    <Button x:Name="btn_31" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="31" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_32" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="32" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_33" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="33" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_34" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="34" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_35" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="35" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_36" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="36" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_37" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="37" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_38" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="38" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_39" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="39" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="40" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_05" ItemWidth="62" Grid.Row="4" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3">
+                    <Button x:Name="btn_41" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="41" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_42" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="42" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_43" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="43" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_44" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="44" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_45" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="45" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_46" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="46" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_47" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="47" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_48" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="48" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_49" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="49" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_50" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="50" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_06" ItemWidth="62" Grid.Row="5" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3,0,2">
+                    <Button x:Name="btn_51" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="51" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_52" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="52" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_53" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="53" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_54" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="54" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_55" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="55" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_56" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="56" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_57" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="57" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_58" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="58" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_59" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="59" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="60" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_07" ItemWidth="62" Grid.Row="6" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3">
+                    <Button x:Name="btn_61" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="61" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_62" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="62" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_63" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="63" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_64" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="64" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_65" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="65" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_66" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="66" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_67" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="67" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_68" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="68" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_69" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="69" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_70" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="70" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_08" ItemWidth="62" Grid.Row="7" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,2,0,3">
+                    <Button x:Name="btn_71" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="71" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_72" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="72" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_73" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="73" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_74" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="74" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_75" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="75" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_76" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="76" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_77" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="77" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_78" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="78" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_79" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="79" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_80" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="80" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_09" ItemWidth="62" Grid.Row="8" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3">
+                    <Button x:Name="btn_81" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="81" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_82" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="82" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_83" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="83" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_84" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="84" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_85" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="85" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_86" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="86" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_87" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="87" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_88" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="88" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_89" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="89" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_90" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="90" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+                <WrapPanel x:Name="row_10" ItemWidth="62" Grid.Row="9" HorizontalAlignment="Left" Width="621" Height="54" Margin="0,3,0,2">
+                    <Button x:Name="btn_91" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="91" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_92" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="92" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_93" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="93" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_94" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="94" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_95" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="95" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_96" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="96" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_97" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="97" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_98" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="98" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_99" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="99" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                    <Button x:Name="btn_100" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" Height="55" Tag="100" Click="ButtonClicked" Style="{StaticResource PieceButtonStyle}"/> 
+                </WrapPanel>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="pauseBtn" Content="Button" Grid.Column="2" Margin="169,10,177,0" Grid.Row="2" Click="ButtonClicked" Height="24" VerticalAlignment="Top" Tag="0"/>
+
+    </Grid>
+</Window>
